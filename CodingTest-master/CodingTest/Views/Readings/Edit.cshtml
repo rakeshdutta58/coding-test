@@ -1,0 +1,131 @@
+﻿@model CodingTest.Models.Reading
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<script type="text/javascript">
+    // sum up input values and show total
+    function SumMagValues() {
+        var magX = document.getElementById('txtMagX').value;
+        var magY = document.getElementById('txtMagY').value;
+        var maxZ = document.getElementById('txtMaxZ').value;
+        var result = parseFloat(magX || 0) + parseFloat(magY || 0) + parseFloat(maxZ || 0);
+        if (!isNaN(result)) {
+            document.getElementById('txtTotalMag').value = result;
+        }
+    }
+
+    function SumGravValues() {
+        var gravX = document.getElementById('txtGravX').value;
+        var gravY = document.getElementById('txtGravY').value;
+        var gravZ = document.getElementById('txtGravZ').value;
+        var result = parseFloat(gravX || 0) + parseFloat(gravY || 0) + parseFloat(gravZ || 0);
+        if (!isNaN(result)) {
+            document.getElementById('txtGravTotal').value = result;
+        }
+    }
+</script>
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Reading</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Depth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Depth, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Depth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- Mag Values -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.MagX, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <!-- added keyup event and id so that we can ref in javascript -->
+                @Html.EditorFor(model => model.MagX, new { htmlAttributes = new { id = "txtMagX", @class = "form-control", onkeyup = "SumMagValues()" } })
+                @Html.ValidationMessageFor(model => model.MagX, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MagY, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <!-- added keyup event and id so that we can ref in javascript -->
+                @Html.EditorFor(model => model.MagY, new { htmlAttributes = new { id = "txtMagY", @class = "form-control", onkeyup = "SumMagValues()" } })
+                @Html.ValidationMessageFor(model => model.MagY, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaxZ, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaxZ, new { htmlAttributes = new { id = "txtMaxZ", @class = "form-control", onkeyup = "SumMagValues()" } })
+                @Html.ValidationMessageFor(model => model.MaxZ, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalMag, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalMag, new { htmlAttributes = new { id = "txtTotalMag", @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <hr />
+        <!-- Grav Values -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.GravX, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GravX, new { htmlAttributes = new { id = "txtGravX", @class = "form-control", onkeyup = "SumGravValues()" } })
+                @Html.ValidationMessageFor(model => model.GravX, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.GravY, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GravY, new { htmlAttributes = new { id = "txtGravY", @class = "form-control", onkeyup = "SumGravValues()" } })
+                @Html.ValidationMessageFor(model => model.GravY, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.GravZ, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GravZ, new { htmlAttributes = new { id = "txtGravZ", @class = "form-control", onkeyup = "SumGravValues()" } })
+                @Html.ValidationMessageFor(model => model.GravZ, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.GravTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GravTotal, new { htmlAttributes = new { id = "txtGravTotal", @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
